@@ -1,0 +1,53 @@
+doctype html
+html
+    head
+        title= title
+        meta(property="og:type" content="website")
+        meta(property="og:site_name" content="SourceBot")
+        meta(property="og:title" content=" User Leaderboard")
+        meta(property="og:description" content="User Leaderboard for TheSourceCode. Are you #1? Check Your rank.")
+        meta(property="og:url" content="example.com")
+        link(rel="shortcut icon" type="image/png" href="/images/sourcebot/purple.png")
+        link(rel='stylesheet', href='/stylesheets/animate.css')
+        link(rel='stylesheet', href='/stylesheets/navbar.css')
+        link(rel='stylesheet', href='/stylesheets/leaderboard.css')
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body(class="animated fadeIn")
+        include navbar
+        block content
+            div(class="container")
+                div(class="body")
+                    div(class="title")
+                        h1= title
+                        p Welcome to the #{title}
+                    div(class="search")
+                        input(id="search-bar", placeholder="Search...")
+                        //input(id="show_amount", type="number", value="20")
+                        select(id="sort-by")
+                            option(value="lvl") Level
+                            option(value="coins") Coins
+                        span(style="float: right") Total: #{data.length}
+                    div(id="top-tile", class="top-tile tile")
+                        span(class="tile-text rank", title="Rank sorted by User's EXP/Coins") Rank
+                        span(class="tile-text user", title="User's name") User
+                        span(class="tile-text lvl", title="User's Level") Level
+                        span(class="tile-text exp", title="User's Experience") EXP
+                        span(class="tile-text coins", title="User's Coins") Coins
+                    div
+                        ul(id="tiles", class="tile-holder")
+                    div(class="loading")
+                        div(class="lds-ellipsis")
+                            div
+                            div
+                            div
+                            div
+                    div(class="go-top") &uparrow;
+script.
+    let users = [#{data}]
+    let search = "#{query}"
+
+script(src="/javascripts/jquery-3.4.1.min.js")
+//script(src="/javascripts/sticky.js")
+script(src="/javascripts/infinite-scroll.js")
+script(src="/javascripts/search.js")
+include footer

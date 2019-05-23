@@ -1,0 +1,21 @@
+doctype html
+html
+    head
+        title= title
+        link(rel="shortcut icon" type="image/png" href="/images/sourcebot/yellow.png")
+        link(rel='stylesheet', href='/stylesheets/animate.css')
+        link(rel='stylesheet', href='/stylesheets/landing.css')
+    body(class="yellow")
+        block content
+            div(class="menu")
+                div(id="background"): div(class="background-img", data-depth="0.2")
+                div(class="menu-body")
+                    p(class="menu-title text-shadow animated zoomIn") Sourcebot
+                    div(class="menu-img-holder animated jackInTheBox"): img(src="/images/sourcebot/yellow_faded.png", class="menu-img")
+                    div(class="menu-buttons-holder")
+                        div(class="menu-buttons")
+                            p(style="color: white; text-align: center; font-size: 30px" class="animated bounceInUp text-shadow")
+                                | Website under construction... Come back later...
+                            span(class="copyright animated bounceInLeft text-shadow") © 2019 TheSourceCode
+    script(src="/javascripts/parallax.js")
+    script new Parallax(document.getElementById('background'));
