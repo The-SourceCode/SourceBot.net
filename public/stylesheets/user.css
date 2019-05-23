@@ -1,0 +1,78 @@
+.profile-title {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.user-info {
+    border: 2px solid rgba(0, 0, 0, 0.11);
+    display: flex;
+    padding: 20px;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+.avatar {
+    width: 200px;
+    height: 200px;
+}
+
+.info-body {
+    width: 100%;
+    padding: 0 0 0 20px;
+}
+
+.info-title {
+    padding: 0 0 10px 0;
+}
+
+.info-bio {
+    white-space: normal;
+}
+
+.user-stats {
+    margin: 10px 0;
+    border: 2px solid rgba(0, 0, 0, 0.11);
+}
+
+.stats-title {
+    background-color: #212121;
+    text-align: center;
+    color: white;
+    padding: 5px;
+}
+
+.stats-body {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+}
+
+.stats {
+    height: 5em;
+}
+
+.user-history {
+    margin: 10px 0;
+    border: 2px solid rgba(0, 0, 0, 0.11);
+}
+
+
+.history-title {
+    background-color: #212121;
+    text-align: center;
+    color: white;
+    padding: 5px;
+}
+
+.history-body {
+    padding: 10px;
+}
+
+.incident {
+    margin: 15px 0;
+}
+
+.incident div {
+    font-size: 18px;
+}

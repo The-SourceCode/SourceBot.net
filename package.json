@@ -1,0 +1,23 @@
+{
+  "name": "sourcebot",
+  "version": "1.0.0",
+  "author": "TheSourceCode",
+  "scripts": {
+    "install": "echo Installing dependencies! && npm i && echo Dependencies installed!",
+    "start": "echo Starting website... && node ./bin/www",
+    "watch": "pm2 start ecosystem.config.js && echo Watching for changes... The website will reload if something changes!"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-rate-limit": "^3.5.1",
+    "got": "^9.6.0",
+    "http-errors": "~1.6.3",
+    "jstransformer-markdown-it": "^2.1.0",
+    "markdown": "^0.5.0",
+    "mongoose": "^5.5.7",
+    "morgan": "~1.9.1",
+    "pug": "^2.0.3"
+  }
+}

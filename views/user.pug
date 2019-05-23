@@ -1,0 +1,74 @@
+doctype html
+html
+    head
+        title= title
+        meta(property="og:type" content="website")
+        meta(property="og:site_name" content="SourceBot")
+        meta(property="og:title" content=`${data.name}`)
+        meta(property="og:description" content="Check this user's stats such as; coins, and punishment history")
+        meta(property="og:url" content="example.com")
+        link(rel="shortcut icon" type="image/png" href="/images/sourcebot/purple.png")
+        link(rel='stylesheet', href='/stylesheets/animate.css')
+        link(rel='stylesheet', href='/stylesheets/navbar.css')
+        link(rel='stylesheet', href='/stylesheets/user.css')
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body(class="animated fadeIn")
+        include navbar
+        block content
+            div(class="container")
+                div(class="body")
+                    div(class="profile-title")
+                        h1 User Profile
+                        p Welcome to #{title}, here you can check the user's stats, bio, and more.
+                    a(href="/leaderboard" class="back-btn") &hookleftarrow; Back
+                    div(class="user-info")
+                        img(class="avatar" src=`${data.avatar}`)
+                        div(class="info-body")
+                            h1(class="info-title")= data.name
+                            h3= "Github: "
+                            a(target="_blank", href=`${data.github || ""}`)= data.github || ""
+                            h3 Bio:
+                            p(class="info-bio")
+                                !=data.bio || "<i>This user has no bio...</i>"
+                    div(class="user-stats")
+                        h1(class="stats-title") Stats
+                        div(class="stats-body")
+                            div(class="stats")
+                                h3 Rank
+                                span= "#" + data.rank
+                            div(class="stats")
+                                h3 Level
+                                span= data.level
+                            div(class="stats")
+                                h3 Exp
+                                span= data.xp
+                            div(class="stats")
+                                h3 Coins
+                                span= data.coins
+                            div(class="stats")
+                                h3 Daily Streak
+                                span= data.dailystreak
+                    div(class="user-history")
+                        h1(class="history-title") History
+                        div(class="history-body")
+                            - incidents = incidents.filter(incident => incident.TYPE !== "ROLE UPDATE")
+                            if incidents.length < 1
+                                i None
+                            else
+                                | Total: #{incidents.length}
+                                each incident in incidents
+                                    div(class="incident")
+                                        div
+                                            strong Type:
+                                            = ` ${incident.TYPE}`
+                                        div
+                                            strong Date:
+                                            = ` ${incident.DATE_TIME}`
+                                        if incident.DURATION
+                                            div
+                                                strong Duration:
+                                                = ` ${incident.DURATION}`
+                                        div
+                                            strong Reason:
+                                            = ` ${incident.REASON}`
+include footer
