@@ -3,3 +3,4 @@ package-lock.json
 config.js
 backup/
 .idea/
+secret.php
