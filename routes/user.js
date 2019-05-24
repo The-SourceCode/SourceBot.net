@@ -16,7 +16,7 @@ router.get('/:id', async function (req, res, next) {
             console.error(e.stack);
             error = true;
         });
-    if (!data) return next(createError(404));
+    if (!data || data.length < 1) return next(createError(404));
 
     let incidents = await incidentsData({TARGET_ID: req.params.id})
         .catch(e => {
@@ -26,7 +26,7 @@ router.get('/:id', async function (req, res, next) {
 
     if (error) return next(createError(500));
 
-    if (incidents) incidents = incidents.sort((a, b) => new Date(b.DATE_TIME).getTime() - new Date(a.DATE_TIME).getTime());
+    if (incidents || incidents.length > 0) incidents = incidents.sort((a, b) => new Date(b.DATE_TIME).getTime() - new Date(a.DATE_TIME).getTime());
     data[0].avatar = await avatar(req.params.id);
 
     res.render('user', {title: `${data[0].name}'s Profile`, data: data[0], incidents});
