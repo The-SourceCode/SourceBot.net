@@ -31,8 +31,12 @@ app.use(function (req, res, next) {
     else next();
 });
 app.use('/', indexRouter);
-app.use('/leaderboard', leaderboardRouter);
-app.use('/user', userRouter);
+
+//Conditionally register routers based on maintenance mode
+if (!require('config').underConstruction) {
+    app.use('/leaderboard', leaderboardRouter);
+    app.use('/user', userRouter);
+}
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
