@@ -6,7 +6,11 @@ async function connect() {
     await mongoose.connect(`mongodb://${user}:${pwd}@${ip}:${port}/${db}?authSource=admin`, {useNewUrlParser: true});
 }
 
-connect().then(() => global.connected = true).catch(e => {
+connect().then(() => {
+    global.connected = true;
+    console.log("Database connected!");
+}).catch(e => {
+    console.log("Database connection error!");
     console.error(e.stack);
     global.connected = false;
 });
