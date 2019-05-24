@@ -2,14 +2,14 @@
 include 'secret.php';
 
 $query = "GitHub-Hookshot/";
-$userAgent = $_SERVER['USER_AGENT'];
+$userAgent = $_SERVER['HTTP_USER_AGENT'];
 
 if (!substr($userAgent, 0, strlen($query)) === $query){
   unauthenticatedUser();
   return;
 }
 
-$receivedSecret = $_SERVER['X_HUB_SIGNATURE'];
+$receivedSecret = $_SERVER['HTTP_X_HUB_SIGNATURE'];
 
 if (!isset($receivedSecret)){
   unauthenticatedUser();
