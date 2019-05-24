@@ -2,4 +2,4 @@
 
 $secret = "your secret here";
 
-?>
+
