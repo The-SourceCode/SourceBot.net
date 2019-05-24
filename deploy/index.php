@@ -30,7 +30,7 @@ function unauthenticatedUser(){
 function success(){
   $commands = array('git -C .. pull');
   foreach($commands as $command){
-    shell_exec('$command 2>&1');
+    shell_exec("$command 2>&1");
   }
 }
-?>
+
