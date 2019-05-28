@@ -14,6 +14,8 @@ Welcome to the official SourceBot's website where you can check user's *rank, le
 
 This project is open source, so you can help us improve the website and issues that you might encounter.
 
+Make sure to check it out! https://sourcebot.net/
+
 # Contributing 📝
 **For Developers:** If you see any errors and you know how to fix it or you want to add a new feature, check the installation and setup section bellow.\
 **For Non-Developers:** If you see an error make sure you let us know in the *[issues](https://github.com/The-SourceCode/sourcebot.net/issues/new)* section.
@@ -23,8 +25,6 @@ You need to have the following:
 * [Node/NPM](https://nodejs.org/en/ 'download nodejs')
 * [Mongo](https://www.mongodb.com/cloud/atlas 'Get a free db') database
 * [Discord](https://discordapp.com/developers/applications/ 'Create a Bot app') bot token
-
-
 * [Jade/Pug](https://pugjs.org/api/getting-started.html) knowledge
 * [Express](https://expressjs.com/) knowledge
 * [Mongoose](https://mongoosejs.com/) knowledge
