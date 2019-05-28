@@ -9,4 +9,8 @@ router.get('/maintenance', function (req, res, next) {
     res.render('construction', {title: 'SourceBot'});
 });
 
+router.post('/deploy', function (req, res, next) {
+    console.log(req)
+});
+
 module.exports = router;
