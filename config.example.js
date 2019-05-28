@@ -18,5 +18,6 @@ module.exports = {
     },
     PORT: 1234,
     bot_token: "", // to get user's discord data.
+    secret: "", // secret keywords for github's webhooks
     underConstruction: false
 };
