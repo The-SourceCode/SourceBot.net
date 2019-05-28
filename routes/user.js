@@ -33,7 +33,7 @@ router.get('/:id', async function (req, res, next) {
 });
 
 async function avatar(user_id) {
-    const {body} = await got("https://discordapp.com/api/users/" + user_id, {
+    const request = await got("https://discordapp.com/api/users/" + user_id, {
         headers: {
             'User-Agent': `DiscordBot (SourceBot Website, v${process.env.npm_package_version})`,
             'Authorization': 'Bot ' + bot_token
@@ -42,8 +42,17 @@ async function avatar(user_id) {
         method: "GET"
     }).catch(console.error);
 
-    // Return the image url as png or gif accordingly.
-    return `https://cdn.discordapp.com/avatars/${user_id}/${body.avatar + (body.avatar.startsWith("a_") ? ".gif" : ".png")}?size=2048`;
+    // Check if the request was completed
+    if (request) {
+        const body = request.body;
+        // Checks if the user has an avatar
+        if (body.avatar)
+        // Return the image url as png or gif accordingly if avatar found
+            return `https://cdn.discordapp.com/avatars/${user_id}/${body.avatar + (body.avatar.startsWith("a_") ? ".gif" : ".png")}?size=2048`;
+    }
+    // Return Source's image if there is no avatar was found
+    return "/images/sourcebot/purple.png";
+
 }
 
 module.exports = router;
