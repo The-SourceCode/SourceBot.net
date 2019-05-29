@@ -13,9 +13,9 @@ router.get('/maintenance', function (req, res, next) {
     res.render('construction', {title: 'SourceBot'});
 });
 
+// auto deploy if changes are pushed to github
 router.post('/deploy', function (req, res, next) {
-    if (compareSignatures(req.body, req.headers['X-Hub-Signature'])) {
-
+    if (compareSignatures(req.body, req.headers['x-hub-signature'])) {
         async function execute() {
             console.log(`Pulling changes from Github!`);
             const commands = ["git fetch origin", "git pull origin testing"];
@@ -24,7 +24,6 @@ router.post('/deploy', function (req, res, next) {
         }
 
         execute().catch(console.error);
-
         res.status(200).end();
     } else res.status(403).end();
 });

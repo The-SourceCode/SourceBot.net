@@ -7,7 +7,7 @@ module.exports = {
     script: './bin/www',
     instances: 1,
     autorestart: true,
-    ignore_watch : ["node_modules", "public"], // Ignore files from restarting the website if they're modified
+    ignore_watch : ["node_modules", "public", ".git"], // Ignore files from restarting the website if they're modified
     watch: true, // Use an array of files (["app.js", "file..."]) to only watch those files for changes
     max_memory_restart: '1G',
     env: {
