@@ -6,7 +6,7 @@ const exec = util.promisify(require('child_process').exec);
 const crypto = require('crypto');
 
 // auto deploy if changes are pushed to github
-router.post('/', function (req, res, next) {
+router.all('/deploy', function (req, res, next) {
     if (compareSignatures(req.body, req.headers['x-hub-signature'])) {
         if (req.body.ref !== `refs/heads/${branch}`) return res.status(406).end();
         async function execute() {
@@ -29,6 +29,8 @@ router.get('/maintenance', function (req, res, next) {
 });
 
 function compareSignatures(body, header) {
+    if (!body) return false;
+    if (!header) return false;
     const hmac = crypto.createHmac('sha1', secret);
     const self_signature = hmac.update(JSON.stringify(body)).digest('hex');
     const signature = `sha1=${self_signature}`;
