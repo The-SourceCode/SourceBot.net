@@ -1,6 +1,13 @@
+# Ignore auto-generated files
+.idea/
 node_modules/
 package-lock.json
-config.js
-backup/
-.idea/
-secret.php
+
+# Ignore all config files
+*config*
+
+# Do not ignore example files
+!*example*
+
+# Ignore logs
+*.log
