@@ -8,16 +8,16 @@ html
         meta(property="og:title" content="SourceBot")
         meta(property="og:description" content="Welcome to my website dear user.")
         meta(property="og:url" content="example.com")
-        link(rel="shortcut icon" type="image/png" href="/images/sourcebot/purple.png")
-        link(rel='stylesheet', href='/stylesheets/animate.css')
-        link(rel='stylesheet', href='/stylesheets/landing.css')
+        link(rel="shortcut icon" type="image/png" href="/images/sourcebot/purple.png?v1")
+        link(rel='stylesheet', href='/stylesheets/animate.css?v1')
+        link(rel='stylesheet', href='/stylesheets/landing.css?v1')
     body(class="purple")
         block content
             div(class="menu")
                 div(id="background"): div(class="background-img", data-depth="0.2")
                 div(class="menu-body")
                     p(class="menu-title animated zoomIn text-shadow") Sourcebot
-                    div(class="menu-img-holder text-shadow animated jackInTheBox"): img(src="/images/sourcebot/purple_faded.png", class="menu-img")
+                    div(class="menu-img-holder text-shadow animated jackInTheBox"): img(src="/images/sourcebot/purple_faded.png?v1", class="menu-img")
                     div(class="menu-buttons-holder")
                         div(class="menu-buttons")
                             a(class="menu-button delay0-4 animated bounceInUp", href="/leaderboard") Leaderboards
@@ -25,5 +25,5 @@ html
                             a(class="menu-button delay0-8 animated bounceInUp", href="https://discordapp.com/invite/w24CQMR") Join discord
                             a(class="menu-button delay1 animated bounceInUp", href="https://github.com/The-SourceCode/") Github
                             span(class="copyright animated bounceInLeft text-shadow") © 2019 TheSourceCode
-    script(src="/javascripts/parallax.js")
+    script(src="/javascripts/parallax.js?v1")
     script new Parallax(document.getElementById('background'));
