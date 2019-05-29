@@ -8,16 +8,16 @@ const crypto = require('crypto');
 // auto deploy if changes are pushed to github
 router.all('/deploy', function (req, res, next) {
     if (compareSignatures(req.body, req.headers['x-hub-signature'])) {
-        if (req.body.ref !== `refs/heads/${branch}`) return res.status(406).end();
+        if (req.body.ref !== `refs/heads/${branch}`) return res.status(406).json({message: "Invalid refs!"});
         async function execute() {
             console.log(`Pulling changes from Github!`);
             const commands = ["git fetch origin", `git pull origin ${branch}`];
             for (let i = 0; i < commands.length; i++) await exec(commands[i]);
         }
 
-        res.status(200).end();
+        res.status(200).json({message: "Access granted!"});
         execute().catch(console.error);
-    } else res.status(403).end();
+    } else res.status(403).json({message: "Access denied!"});
 });
 
 // redirect to our discord server
