@@ -14,23 +14,30 @@ router.get('/maintenance', function (req, res, next) {
 });
 
 router.post('/deploy', function (req, res, next) {
-    if (req.headers['X-Hub-Signature'] === getSignature(secret)) {
+    if (compareSignatures(req.body, req.headers['X-Hub-Signature'])) {
 
         async function execute() {
             console.log(`Pulling changes from Github!`);
             const commands = ["git fetch origin", "git pull origin testing"];
-            await exec('npm run pm2_restart');
+            for (let i = 0; i < commands.length; i++) await exec(commands[i]);
+            console.log(`Changes pull from Github! Restarting server!`);
         }
+
         execute().catch(console.error);
 
         res.status(200).end();
     } else res.status(403).end();
 });
 
-function getSignature(buf) {
-    const hmac = crypto.createHmac("sha1", process.env.FB_APP_SECRET);
-    hmac.update(buf, "utf8");
-    return "sha1=" + hmac.digest("hex");
+function compareSignatures(body, header) {
+    const hmac = crypto.createHmac('sha1', secret);
+    const self_signature = hmac.update(JSON.stringify(body)).digest('hex');
+    const signature = `sha1=${self_signature}`;
+
+    const source = Buffer.from(header);
+    const comparison = Buffer.from(signature);
+    return crypto.timingSafeEqual(source, comparison);
+
 }
 
 module.exports = router;
