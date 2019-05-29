@@ -8,11 +8,11 @@ html
         meta(property="og:title" content=" User Leaderboard")
         meta(property="og:description" content="User Leaderboard for TheSourceCode. Are you #1? Check Your rank.")
         meta(property="og:url" content="example.com")
-        link(rel="shortcut icon" type="image/png" href="/images/sourcebot/purple.png")
-        link(rel='stylesheet', href='/stylesheets/animate.css')
-        link(rel='stylesheet', href='/stylesheets/navbar.css')
-        link(rel='stylesheet', href='/stylesheets/leaderboard.css')
-        link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel="shortcut icon" type="image/png" href="/images/sourcebot/purple.png?v1")
+        link(rel='stylesheet', href='/stylesheets/animate.css?v1')
+        link(rel='stylesheet', href='/stylesheets/navbar.css?v1')
+        link(rel='stylesheet', href='/stylesheets/leaderboard.css?v1')
+        link(rel='stylesheet', href='/stylesheets/style.css?v1')
     body(class="animated fadeIn")
         include navbar
         block content
@@ -47,8 +47,8 @@ script.
     let users = [#{data}]
     let search = "#{query}"
 
-script(src="/javascripts/jquery-3.4.1.min.js")
+script(src="/javascripts/jquery-3.4.1.min.js?v1")
 //script(src="/javascripts/sticky.js")
-script(src="/javascripts/infinite-scroll.js")
-script(src="/javascripts/search.js")
+script(src="/javascripts/infinite-scroll.js?v1")
+script(src="/javascripts/search.js?v1")
 include footer
