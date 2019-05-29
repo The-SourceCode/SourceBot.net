@@ -6,6 +6,8 @@ const got = require("got");
 const {bot_token} = require("../config");
 
 router.get('/:id', async function (req, res, next) {
+    if (!global.connected) next(createError(500));
+
     let error = false;
     const id = req.params.id;
 

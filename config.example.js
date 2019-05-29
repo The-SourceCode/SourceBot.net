@@ -18,5 +18,9 @@ module.exports = {
     },
     PORT: 1234,
     bot_token: "", // to get user's discord data.
+    autodeploy: {
+        branch: "production", // branch to auto deploy
+        secret: "" // secret keywords for github's webhooks
+    },
     underConstruction: false
 };
