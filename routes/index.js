@@ -5,14 +5,6 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const crypto = require('crypto');
 
-router.get('/', function (req, res, next) {
-    res.render('index', {title: 'SourceBot'}); // Renders the index.pug file from the views folder
-});
-
-router.get('/maintenance', function (req, res, next) {
-    res.render('construction', {title: 'SourceBot'});
-});
-
 // auto deploy if changes are pushed to github
 router.post('/', function (req, res, next) {
     if (compareSignatures(req.body, req.headers['x-hub-signature'])) {
@@ -26,6 +18,14 @@ router.post('/', function (req, res, next) {
         res.status(200).end();
         execute().catch(console.error);
     } else res.status(403).end();
+});
+
+router.get('/', function (req, res, next) {
+    res.render('index', {title: 'SourceBot'}); // Renders the index.pug file from the views folder
+});
+
+router.get('/maintenance', function (req, res, next) {
+    res.render('construction', {title: 'SourceBot'});
 });
 
 function compareSignatures(body, header) {
