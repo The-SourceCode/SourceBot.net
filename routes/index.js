@@ -37,7 +37,6 @@ function compareSignatures(body, header) {
     const source = Buffer.from(header);
     const comparison = Buffer.from(signature);
     return crypto.timingSafeEqual(source, comparison);
-
 }
 
 module.exports = router;
