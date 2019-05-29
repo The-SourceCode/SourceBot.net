@@ -20,6 +20,11 @@ router.all('/deploy', function (req, res, next) {
     } else res.status(403).end();
 });
 
+// redirect to our discord server
+router.all('/discord', function (req, res, next) {
+    res.redirect("https://discordapp.com/invite/w24CQMR");
+});
+
 router.get('/', function (req, res, next) {
     res.render('index', {title: 'SourceBot'}); // Renders the index.pug file from the views folder
 });
