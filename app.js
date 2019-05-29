@@ -27,11 +27,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // setup routes
 app.use(function (req, res, next) {
-    if (!global.connected) next(createError(500));
-    else if (require("./config").underConstruction && req.originalUrl !== "/maintenance") res.redirect('/maintenance');
+    if (require("./config").underConstruction && req.originalUrl !== "/maintenance") res.redirect('/maintenance');
     else next();
 });
 app.use('/', indexRouter);
+
+app.use(function (req, res, next) {
+    next(!global.connected ? createError(500) : "");
+});
 app.use('/leaderboard', leaderboardRouter);
 app.use('/user', userRouter);
 

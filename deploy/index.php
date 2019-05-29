@@ -1,6 +1,9 @@
 <?php
 include 'secret.php';
 
+$body = file_get_contents('php://input');
+$hashedSecret = "sha1=" . hash_hmac("sha1", $body, $secret, $raw_output=false);
+
 $query = "GitHub-Hookshot/";
 $userAgent = $_SERVER['HTTP_USER_AGENT'];
 
@@ -16,7 +19,7 @@ if (!isset($receivedSecret)){
   return;
 }
 
-if ($secret != $receivedSecret){
+if ($hashedSecret != $receivedSecret){
   unauthenticatedUser();
   return;
 }
@@ -28,7 +31,7 @@ function unauthenticatedUser(){
 }
 
 function success(){
-  $commands = array('git -C .. pull');
+  $commands = array('git -C .. pull', 'git -C .. checkout production', 'systemctl sourcebot-leaderboard restart');
   foreach($commands as $command){
     shell_exec("$command 2>&1");
   }
