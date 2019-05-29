@@ -31,6 +31,10 @@ app.use(function (req, res, next) {
     else next();
 });
 app.use('/', indexRouter);
+
+app.use(function (req, res, next) {
+    next(!global.connected ? createError(500) : "");
+});
 app.use('/leaderboard', leaderboardRouter);
 app.use('/user', userRouter);
 

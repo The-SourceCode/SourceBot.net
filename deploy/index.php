@@ -31,7 +31,7 @@ function unauthenticatedUser(){
 }
 
 function success(){
-  $commands = array('git -C .. pull', 'git -C .. checkout master', 'systemctl sourcebot-leaderboard restart');
+  $commands = array('git -C .. pull', 'git -C .. checkout production', 'systemctl sourcebot-leaderboard restart');
   foreach($commands as $command){
     shell_exec("$command 2>&1");
   }
