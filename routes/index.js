@@ -20,11 +20,10 @@ router.post('/deploy', function (req, res, next) {
             console.log(`Pulling changes from Github!`);
             const commands = ["git fetch origin", "git pull origin testing"];
             for (let i = 0; i < commands.length; i++) await exec(commands[i]);
-            console.log(`Changes pull from Github! Restarting server!`);
         }
 
-        execute().catch(console.error);
         res.status(200).end();
+        execute().catch(console.error);
     } else res.status(403).end();
 });
 
