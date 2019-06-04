@@ -13,8 +13,8 @@
 
 .avatar {
     display: block;
-    max-width:200px;
-    max-height:200px;
+    max-width: 200px;
+    max-height: 200px;
     width: auto;
     height: auto;
 }
@@ -38,9 +38,7 @@
 }
 
 .stats-title {
-    background-color: #212121;
     text-align: center;
-    color: white;
     padding: 5px;
 }
 
@@ -60,11 +58,8 @@
     border: 2px solid rgba(0, 0, 0, 0.11);
 }
 
-
 .history-title {
-    background-color: #212121;
     text-align: center;
-    color: white;
     padding: 5px;
 }
 
