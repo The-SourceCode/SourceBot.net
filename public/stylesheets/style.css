@@ -6,7 +6,6 @@
 
 body {
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-    background-color: white;
 }
 
 a {
@@ -21,6 +20,7 @@ a {
 }
 
 .body {
+    padding-top: 20px;
     grid-area: body;
     width: 100%;
 }
@@ -31,20 +31,14 @@ a {
 }
 
 .search {
-    padding: 10px;
+    padding: 10px 0;
     width: 100%;
-}
-
-.search label {
-    padding: 5px;
-    font-size: 16px;
 }
 
 .search input {
     padding: 5px;
     border-radius: 5px;
     width: 15em;
-    margin: 0 5px;
 }
 
 .back-btn {
@@ -60,8 +54,6 @@ a {
     padding: 10px;
     cursor: pointer;
     display: none;
-    border: 2px solid black;
-    background-color: white;
 }
 
 select {
@@ -69,6 +61,11 @@ select {
     border-radius: 5px;
     width: 10em;
     margin: 0 5px;
+    border: none
+}
+
+input {
+    border: none
 }
 
 @media only screen and (max-width: 50em) {

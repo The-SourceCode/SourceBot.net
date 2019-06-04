@@ -19,5 +19,17 @@
     "mongoose": "^5.5.7",
     "morgan": "~1.9.1",
     "pug": "^2.0.3"
-  }
+  },
+  "description": "<div align=\"center\">\r <img src=\"https://i.imgur.com/qwt4PFB.png\" align=\"center\" alt=\"Logo\">\r <br><br>\r <strong><i>An Open-Source project from TheSourceCode</i></strong>\r <br><br>\r <a href=\"https://discord.gg/jkAzNyB\"> <img src=\"https://img.shields.io/discord/265499275088232448.svg?colorB=Blue&logo=discord&label=Support&style=for-the-badge\" alt=\"Support\"></a><br>\r </div>",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/The-SourceCode/SourceBot.net.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/The-SourceCode/SourceBot.net/issues"
+  },
+  "homepage": "https://github.com/The-SourceCode/SourceBot.net#readme"
 }

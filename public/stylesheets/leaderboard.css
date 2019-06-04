@@ -21,25 +21,7 @@ ul.tile-holder {
 }
 
 .top-tile {
-    background-color: #212121;
-    color: white;
     transition: .5s;
-}
-
-.lb-tile {
-    color: #000;
-}
-
-.first {
-    background-color: #FFEA00;
-}
-
-.second {
-    background-color: #B0BEC5;
-}
-
-.third {
-    background-color: #FBC02D;
 }
 
 .tile {
