@@ -1,0 +1,40 @@
+* {
+  transition: background-color 0.2s, color 0.01s;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+hr {
+  opacity: 0.3;
+}
+
+.tabs {
+  position: relative;
+}
+
+.tab {
+  right: 10px;
+  left: 10px;
+  position: absolute;
+}
+
+.tab-btn {
+  cursor: pointer;
+}
+
+$success: #28a745;
+$danger: #dc3545;
+$info: #007BFF;
+$warning: #ffc107;
+
+$custom-badge-colors: (
+        "orange": #FF9800,
+        "blue": #03A9F4,
+        "role_admin": #fd5151,
+        "role_mod": #9b59b6,
+        "role_developer": #47ac9c,
+);
+
+$theme-colors: map-merge($custom-theme-colors, $custom-badge-colors);
