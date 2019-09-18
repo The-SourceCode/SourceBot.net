@@ -9,10 +9,11 @@ const crypto = require('crypto');
 router.all('/deploy', function (req, res, next) {
     if (compareSignatures(req.body, req.headers['x-hub-signature'])) {
         if (req.body.ref !== `refs/heads/${branch}`) return res.status(406).json({message: "Invalid refs!"});
+
         async function execute() {
             console.log(`Pulling changes from Github!`);
-            const commands = ["git fetch origin", `git pull origin ${branch}`];
-            for (let i = 0; i < commands.length; i++) await exec(commands[i]);
+            const commands = ["cd ../", "git fetch origin", `git pull origin ${branch}`, 'npm i', 'pm2 reload ecosystem.config.js'];
+            await exec(commands.join(" && "));
         }
 
         res.status(200).json({message: "Access granted!"});
