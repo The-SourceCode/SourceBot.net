@@ -1,0 +1,22 @@
+doctype html
+html
+    head
+        title #{title} - SourceBot
+        meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+        meta(property="og:type" content="website")
+        meta(property="og:site_name" content="SourceBot")
+        meta(property="og:title" content="User Leaderboard")
+        meta(property="og:description" content="User Leaderboard for TheSourceCode. Are you #1? Check Your rank.")
+        meta(property="og:url" content="https://sourcebot.net/")
+        include layout/head
+        script.
+            $(document).ready(function () {
+                loadData('incidents', function () {
+                    currentPage('incidents');
+                });
+            });
+    body(class="bg-theme-color-main")
+        block content
+            include layout/navbar
+            div(class="container pt-5")
+                div(class="data-container row")

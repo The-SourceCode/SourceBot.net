@@ -11,3 +11,6 @@ package-lock.json
 
 # Ignore logs
 *.log
+
+# Ignore .css files because there exists .sass/.scss
+*.css

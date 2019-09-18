@@ -22,5 +22,8 @@ module.exports = {
         branch: "production", // branch to auto deploy
         secret: "" // secret keywords for github's webhooks
     },
-    underConstruction: false
+    underConstruction: false,
+    discord: {
+        guild_id: "" // ID of the guild
+    }
 };

@@ -1,55 +1,29 @@
 doctype html
 html
     head
-        title= title
+        title #{title} - SourceBot
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(property="og:type" content="website")
         meta(property="og:site_name" content="SourceBot")
-        meta(property="og:title" content=" User Leaderboard")
+        meta(property="og:title" content="User Leaderboard")
         meta(property="og:description" content="User Leaderboard for TheSourceCode. Are you #1? Check Your rank.")
         meta(property="og:url" content="https://sourcebot.net/")
-        link(rel="shortcut icon" type="image/png" href="/images/sourcebot/purple.png?v1")
-        link(rel='stylesheet', href='/stylesheets/animate.css?v1')
-        link(rel='stylesheet', href='/stylesheets/navbar.css?v1')
-        link(rel='stylesheet', href='/stylesheets/leaderboard.css?v1')
-        link(rel='stylesheet', href='/stylesheets/style.css?v1')
-        link(rel='stylesheet', href='/stylesheets/themes/dark.css?v1')
-    body(class="animated fadeIn")
-        include navbar
+        include layout/head
+        script.
+            $(document).ready(function () {
+                loadData('leaderboard', function () {
+                    currentPage('leaderboard');
+                });
+                search();
+            });
+    body(class="bg-theme-color-main")
         block content
-            div(class="container")
-                div(class="body")
-                    div(class="title")
-                        h1= title
-                        p Welcome to the #{title}
-                    div(class="search")
-                        input(id="search-bar", placeholder="Search...")
-                        //input(id="show_amount", type="number", value="20")
-                        select(id="sort-by")
-                            option(value="lvl") Level
-                            option(value="coins") Coins
-                        span(style="float: right") Total: #{data.length}
-                    div(id="top-tile", class="top-tile tile")
-                        span(class="tile-text rank", title="Rank sorted by User's EXP/Coins") Rank
-                        span(class="tile-text user", title="User's name") User
-                        span(class="tile-text lvl", title="User's Level") Level
-                        span(class="tile-text exp", title="User's Experience") EXP
-                        span(class="tile-text coins", title="User's Coins") Coins
-                    div
-                        ul(id="tiles", class="tile-holder")
-                    div(class="loading")
-                        div(class="lds-ellipsis")
-                            div
-                            div
-                            div
-                            div
-                    div(class="go-top") &uparrow;
-script.
-    let users = [#{data}]
-    let search = "#{query}"
-
-script(src="/javascripts/jquery-3.4.1.min.js?v1")
-//script(src="/javascripts/sticky.js")
-script(src="/javascripts/infinite-scroll.js?v1")
-script(src="/javascripts/search.js?v1")
-include footer
+            include layout/navbar
+            div(class="container pt-5")
+                div(class="shadow card bg-theme-color-secondary text-theme-text-1 animated fadeInDown mt-1 mb-3" style="animation-delay: 0.2s;")
+                    div(class="card-body row")
+                        div(class="col-2 d-inline-block text-truncate font-weight-bold") Rank
+                        div(class="col-5 d-inline-block text-truncate font-weight-bold") User
+                        div(class="col-2 d-inline-block text-truncate font-weight-bold") Level
+                        div(class="col-3 d-inline-block text-truncate font-weight-bold") Coins
+                div(class="data-container")

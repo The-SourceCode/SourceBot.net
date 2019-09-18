@@ -3,58 +3,108 @@ const createError = require('http-errors');
 const router = Router();
 const {userData, incidentsData} = require('../database/DataHandler');
 const got = require("got");
-const {bot_token} = require("../config");
+const {bot_token, discord} = require("../config");
 
 router.get('/:id', async function (req, res, next) {
-    if (!global.connected) next(createError(500));
-
-    let error = false;
     const id = req.params.id;
 
-    if (!(/^\d+$/.test(id))) return next(createError(404)); // Test if the parameter id contains a letter and create a 404 error if it does.
+    // Test if the parameter id contains a letter and create a 404 error if it does.
+    if (!(/^\d+$/.test(id))) return next(createError(404));
 
-    const data = await userData({id: req.params.id}, "name id xp level rank bio github coins dailystreak -_id")
-        .catch(e => {
-            console.error(e.stack);
-            error = true;
+    try {
+        const data = await userData(
+            {id},
+            "name id xp level rank bio github coins dailystreak -_id badges",
+            null,
+            {lean: true}
+        );
+        if (!data || data.length < 1) return next(createError(404));
+
+        let incidents = await incidentsData({TARGET_ID: id}, null, {lean: true});
+
+        if (incidents && incidents.length > 0) {
+            incidents = incidents.sort((a, b) => new Date(b.DATE_TIME).getTime() - new Date(a.DATE_TIME).getTime());
+        }
+
+        const dUser = await discordUser(id);
+
+        res.render('user', {
+            title: `${data[0].name}'s Profile`,
+            user: {...data[0], discordUser: dUser},
+            incidents,
+            theme: req.cookies.theme || 'dark'
         });
-    if (!data || data.length < 1) return next(createError(404));
-
-    let incidents = await incidentsData({TARGET_ID: req.params.id})
-        .catch(e => {
-            console.error(e.stack);
-            error = true;
-        });
-
-    if (error) return next(createError(500));
-
-    if (incidents || incidents.length > 0) incidents = incidents.sort((a, b) => new Date(b.DATE_TIME).getTime() - new Date(a.DATE_TIME).getTime());
-    data[0].avatar = await avatar(req.params.id);
-
-    res.render('user', {title: `${data[0].name}'s Profile`, data: data[0], incidents});
+    } catch (e) {
+        console.error(e);
+        next(createError(500));
+    }
 });
 
-async function avatar(user_id) {
-    const request = await got("https://discordapp.com/api/users/" + user_id, {
+async function discordRoles() {
+    try {
+        const request = await discordRequest(`guilds/${discord.guild_id}/roles`);
+        return request.body;
+    } catch (e) {
+        console.error(e);
+    }
+    return [];
+}
+
+async function discordUser(user_id) {
+    try {
+        const request = await discordRequest(`guilds/${discord.guild_id}/members/${user_id}`);
+        const body = request.body;
+        const user = body.user;
+
+        const roles = await discordRoles();
+        body.roles = roles
+            .filter(role => body.roles.includes(role.id))
+            .map(role => {
+                role.color = rgbToHex(role.color);
+                if (role.color === "00") role.color = "99aab5";
+                return role;
+            })
+            .sort(((a, b) => b.position - a.position));
+        // Checks if the user has an avatar
+        if (user && user.avatar) {
+            // Get the path for the avatar (png or gif accordingly)
+            const avatar_path = user.avatar + (user.avatar.startsWith("a_") ? ".gif" : ".png");
+            // Return the image url as png or gif accordingly if avatar found
+            return {
+                ...body,
+                avatar_url: `https://cdn.discordapp.com/avatars/${user_id}/${avatar_path}?size=2048`
+            }
+        }
+        return {
+            ...body,
+            avatar_url: "/images/sourcebot/purple.png"
+        };
+    } catch (e) {
+        console.error(e);
+    }
+    // Return Source's image if there is no avatar was found (or on error)
+    return {
+        avatar_url: "/images/sourcebot/purple.png"
+    };
+}
+
+async function discordRequest(path) {
+    return got(`https://discordapp.com/api/${path}`, {
         headers: {
             'User-Agent': `DiscordBot (SourceBot Website, v${process.env.npm_package_version})`,
             'Authorization': 'Bot ' + bot_token
         },
         json: true,
         method: "GET"
-    }).catch(console.error);
+    });
+}
 
-    // Check if the request was completed
-    if (request) {
-        const body = request.body;
-        // Checks if the user has an avatar
-        if (body.avatar)
-        // Return the image url as png or gif accordingly if avatar found
-            return `https://cdn.discordapp.com/avatars/${user_id}/${body.avatar + (body.avatar.startsWith("a_") ? ".gif" : ".png")}?size=2048`;
+function rgbToHex(rgb) {
+    let hex = Number(rgb).toString(16);
+    if (hex.length < 2) {
+        hex = "0" + hex;
     }
-    // Return Source's image if there is no avatar was found
-    return "/images/sourcebot/purple.png";
-
+    return hex;
 }
 
 module.exports = router;
