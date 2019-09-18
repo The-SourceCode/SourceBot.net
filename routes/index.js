@@ -11,7 +11,7 @@ router.all('/deploy', function (req, res, next) {
         if (req.body.ref !== `refs/heads/${branch}`) return res.status(406).json({message: "Invalid refs!"});
         async function execute() {
             console.log(`Pulling changes from Github!`);
-            const commands = ["git fetch origin", `git pull origin ${branch}`];
+            const commands = ["git fetch origin", `git pull origin ${branch}`, 'npm i', 'pm2 reload ../ecosystem.config.js'];
             for (let i = 0; i < commands.length; i++) await exec(commands[i]);
         }
 

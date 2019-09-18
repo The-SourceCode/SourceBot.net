@@ -1,49 +1,78 @@
 class InfiniteScroll {
-    constructor(elem, amount) {
-        this._elem = elem;
-        this._amount = parseInt(amount);
-        this._showing = 0;
-        this._enabled = true;
-        this._data = [];
-        this._timeout = false;
-
-        $(document).on('scroll', () => {
-            if (window.scrollY > 200) $('.go-top').slideDown();
-            else $('.go-top').slideUp();
-            if (this.enabled) {
-                const maxY = document.documentElement.scrollHeight - document.documentElement.clientHeight - 20;
-                if (window.scrollY >= maxY) this.display();
-            }
+    /**
+     * @param {string} [opt.type]
+     * @param {object} [opt.element]
+     * @param {number} [opt.limit]
+     * @param {number} [opt.amount]
+     * @param {function} [opt.format]
+     * @param {function} [opt.onFinishAdding]
+     */
+    constructor(opt) {
+        if (!opt.type || typeof opt.type !== 'string') throw "Type must be a String";
+        this._type = opt.type;
+        if (!opt.element || typeof opt.element !== 'object') throw "Element must be a JQuery Object";
+        this._elem = opt.element;
+        if (!opt.limit || typeof opt.limit !== 'number') throw "Limit must be a Number";
+        this._limit = opt.limit;
+        if (opt.format && typeof opt.format !== 'function') throw "Format must be a Function";
+        this._format = opt.format || (data => data);
+        if (opt.onFinishAdding && typeof opt.onFinishAdding !== 'function') throw "OnFinishAdding must be a Function";
+        this._onFinishAdding = opt.onFinishAdding || (() => {
         });
+        this._a = false;
+        this._b = false;
+        this._more = true;
+        this._page = 0;
+        this._query = 'q=more_data';
+
+        const onScroll = () => {
+            if (this._a) return;
+            if ($(window).scrollTop() + window.innerHeight >= document.body.scrollHeight - 50) {
+                this.display().catch(console.error);
+            }
+        };
+
+        $(document.body).on('touchmove', onScroll);
+        $(window).on('scroll', onScroll);
     }
 
-    display() {
-        if (this._showing >= this._data.length || this._timeout) return;
-        const loading = $('.lds-ellipsis');
-        loading.show();
-        this._elem.append(this._data.slice(this._showing, this._showing + this._amount));
-        this._showing = this._showing + this._amount;
-        loading.hide();
-        this._timeout = false;
+    async display() {
+        this._a = true;
+
+        if (this._b) return Promise.reject({append: false, err: 'Too many requests'});
+        if (!this._more) return Promise.reject({append: false, err: 'No more data to send'});
+        this._b = true;
+
+        $.post(`/${this._type}?${this._query}`, {limit: this._limit, skip: this._page * this._limit})
+            .done(response => {
+                if (!Array.isArray(response.data)) {
+                    this._elem.append(String(this._format(response.data)));
+                } else {
+                    for (let i = 0; i < response.data.length; i++) {
+                        this._elem.append(String(this._format(response.data[i])));
+                    }
+                }
+                this._more = response.more;
+                this._page++;
+                this._onFinishAdding(response.data);
+                this._b = false;
+            })
+            .fail(() => this._elem.append("<i class='text-danger'>There was an error while loading this page.</i>"))
+            .always(() => {
+                this._a = false;
+                this._b = false;
+            });
     }
 
-    restart() {
-        this._showing = 0;
-    }
-
-    set data(data) {
-        this._data = data;
-    }
-
-    set enabled(b) {
-        this._enabled = b;
-    }
-
-    get enabled() {
-        return this._enabled;
-    }
-
-    set amount(n) {
-        this._amount = parseInt(n);
+    async reset(query) {
+        this._a = false;
+        this._more = true;
+        this._page = 0;
+        this._elem.html(null);
+        this._query = query || "q=more_data";
+        this.display().catch(e => {
+            if (e.append) this._elem.append("<i class='text-danger'>There was an error while loading this page.</i>");
+            console.error(e)
+        })
     }
 }

@@ -1,79 +1,85 @@
 doctype html
 html
     head
-        title= title
+        title #{title} - SourceBot
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(property="og:type" content="website")
         meta(property="og:site_name" content="SourceBot")
-        meta(property="og:title" content=`Profile of ${data.name}`)
-        meta(property="og:description" content=`This user is level ${data.level} with ${data.coins} coins\nTo see more click the link above!`)
+        meta(property="og:title" content=user.name + "'s Profile")
+        meta(property="og:description" content="")
         meta(property="og:url" content="https://sourcebot.net/")
-        link(rel="shortcut icon" type="image/png" href="/images/sourcebot/purple.png?v1")
-        link(rel='stylesheet', href='/stylesheets/animate.css?v1')
-        link(rel='stylesheet', href='/stylesheets/navbar.css?v1')
-        link(rel='stylesheet', href='/stylesheets/user.css?v1')
-        link(rel='stylesheet', href='/stylesheets/style.css?v1')
-        link(rel='stylesheet', href='/stylesheets/themes/dark.css?v1')
-    body(class="animated fadeIn")
-        include navbar
+        include layout/head
+        script.
+            $(document).ready(function () {
+                $('#badges-container').append(getBadge(!{JSON.stringify(user.badges)}));
+                console.log(!{JSON.stringify(user)})
+            });
+    body(class="bg-theme-color-main")
         block content
-            div(class="container")
-                div(class="body")
-                    div(class="profile-title")
-                        h1 User Profile
-                        p Welcome to #{title}, here you can check the user's stats, bio, and more.
-                    a(href="/leaderboard" class="back-btn") &hookleftarrow; Back
-                    div(class="user-info")
-                        img(class="avatar" src=`${data.avatar}`)
-                        div(class="info-body")
-                            h1(class="info-title")= data.name
-                            h3= "Github: "
-                            if (data.github)
-                                a(target="_blank", href=`${data.github}`)= data.github
-                            else
-                                i None
-                            h3 Bio:
-                            p(class="info-bio")
-                                !=data.bio || "<i>This user has no bio...</i>"
-                    div(class="user-stats")
-                        h1(class="stats-title") Stats
-                        div(class="stats-body")
-                            div(class="stats")
-                                h3 Rank
-                                span= "#" + data.rank
-                            div(class="stats")
-                                h3 Level
-                                span= data.level
-                            div(class="stats")
-                                h3 Exp
-                                span= data.xp
-                            div(class="stats")
-                                h3 Coins
-                                span= data.coins
-                            div(class="stats")
-                                h3 Daily Streak
-                                span= data.dailystreak
-                    div(class="user-history")
-                        h1(class="history-title") History
-                        div(class="history-body")
-                            - incidents = incidents.filter(incident => incident.TYPE !== "ROLE UPDATE")
-                            if incidents.length < 1
-                                i None
-                            else
-                                | Total: #{incidents.length}
-                                each incident in incidents
-                                    div(class="incident")
-                                        div
-                                            strong Type:
-                                            = ` ${incident.TYPE}`
-                                        div
-                                            strong Date:
-                                            = ` ${incident.DATE_TIME}`
+            include layout/navbar
+            div(class="bg-theme-color-secondary text-theme-text-1 animated fadeIn")
+                div(class="media container row p-0 m-auto align-self-center")
+                    img(src=user.discordUser.avatar_url class="img-thumbnail rounded-circle m-4" width='150' alt=user.name + "'s Avatar")
+                    div(class="media-body align-self-center")
+                        h2(class="mb-0")=user.name
+                            span(class="badge badge-secondary")= "#" + user.discordUser.user.discriminator
+                        if user.discordUser.nick
+                            span(class="text-muted"): strong= "AKA: " + user.discordUser.nick
+                        div(id="badges-container")
+                div(class="container row p-0 m-auto")
+                    a(class="btn btn-theme-color-secondary rounded-0 col tab-btn" data-toggle-tab="1") Profile
+                    a(class="btn btn-theme-color-secondary rounded-0 col tab-btn" data-toggle-tab="2")
+                        | History
+                        |
+                        span(class="badge badge-danger")=incidents.length
+            div(class="container text-theme-text-1 pt-5 tabs animated fadeIn")
+                div(id="profile" class="tab animated row" data-tab="1")
+                    div(class="col")
+                        div(class="pb-3")
+                            h4 Bio
+                            !=user.bio
+                        hr(class="bg-theme-text-1")
+                        div(class="pb-3")
+                            h4 Roles
+                            if user.discordUser.roles
+                                each role in user.discordUser.roles
+                                    span(class="badge m-1 dynamic-color" style="background-color: #" + role.color
+                                    + "; font-size: 14px;")=role.name
+                    div(class="col-4")
+                        div="Joined  " + new Date(user.discordUser.joined_at).toDateString()
+                        hr(class="bg-theme-text-1")
+                        div=user.xp.addCommas() + " exp"
+                        hr(class="bg-theme-text-1")
+                        div="Level " + user.level.addCommas()
+                        hr(class="bg-theme-text-1")
+                        div=user.coins.addCommas() + " coins"
+                        hr(class="bg-theme-text-1")
+                        div=user.dailystreak.addCommas() + " daily streak"
+                        hr(class="bg-theme-text-1")
+                        a(href=user.github class="fab fa-github text-decoration-none text-theme-text-1" style="font-size: 30px" title="Github")
+                div(id="history" class="tab animated row" data-tab="2")
+                    if incidents.length > 0
+                    each incident in incidents
+                        div(class='col-md-6')
+                            div(class="shadow card text-theme-text-1 bg-theme-color-1 mb-3")
+                                div(class="card-body")
+                                    h5(class="card-title") #{incident.TYPE}
+                                    p(class="card-text")
+                                        strong STAFF ID:
+                                        |
+                                        | #{incident.STAFF_ID}
+                                        br
+                                        strong Reason:
+                                        |
+                                        | #{incident.REASON}
+                                        br
                                         if incident.DURATION
-                                            div
-                                                strong Duration:
-                                                = ` ${incident.DURATION}`
-                                        div
-                                            strong Reason:
-                                            = ` ${incident.REASON}`
-include footer
+                                            strong Duration:
+                                            |
+                                            | #{incident.DURATION}
+                                            br
+                                div(class="card-footer")
+                                    small(class="text-muted float-left") #{incident.DATE_TIME}
+                                    small(class="text-muted float-right") ##{incident.CASE_ID.addCommas()}
+                    else
+                        i There are no punishments on this user.

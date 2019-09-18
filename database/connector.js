@@ -10,7 +10,7 @@ connect().then(() => {
     global.connected = true;
     console.log("Database connected!");
 }).catch(e => {
-    console.log("Database connection error!");
+    console.error("Database connection error!");
     console.error(e.stack);
     global.connected = false;
 });

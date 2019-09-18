@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "author": "TheSourceCode",
   "scripts": {
-    "install": "echo Installing dependencies! && npm i && echo Dependencies installed!",
     "start": "echo Starting website... && node ./bin/www",
     "watch": "pm2 start ecosystem.config.js && echo Watching for changes... The website will reload if something changes!"
   },
@@ -15,14 +14,18 @@
     "got": "^9.6.0",
     "http-errors": "~1.6.3",
     "jstransformer-markdown-it": "^2.1.0",
-    "markdown": "^0.5.0",
+    "markdown-it": "latest",
     "mongoose": "^5.5.7",
     "morgan": "~1.9.1",
+    "node-sass-middleware": "^0.11.0",
     "pug": "^2.0.3"
   },
   "description": "<div align=\"center\">\r <img src=\"https://i.imgur.com/qwt4PFB.png\" align=\"center\" alt=\"Logo\">\r <br><br>\r <strong><i>An Open-Source project from TheSourceCode</i></strong>\r <br><br>\r <a href=\"https://discord.gg/jkAzNyB\"> <img src=\"https://img.shields.io/discord/265499275088232448.svg?colorB=Blue&logo=discord&label=Support&style=for-the-badge\" alt=\"Support\"></a><br>\r </div>",
   "main": "app.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "bootstrap": "^4.3.1",
+    "pm2": "^3.5.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/The-SourceCode/SourceBot.net.git"

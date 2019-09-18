@@ -1,0 +1,11 @@
+$custom-theme-colors: (
+        "theme-color-main": #292929,
+        "theme-color-secondary": #373737,
+        "theme-color-1": #2f2f2f,
+        "theme-color-2": #212121,
+        "theme-text-1": #f8f9fa,
+        "theme-text-2": #000,
+);
+
+@import "defaults";
+@import "../../../node_modules/bootstrap/scss/bootstrap";
