@@ -24,6 +24,6 @@ module.exports = {
     },
     underConstruction: false,
     discord: {
-        guild_id: "265499275088232448"
+        guild_id: "" // ID of the guild
     }
 };
