@@ -68,7 +68,7 @@ function loadData(page, onFinish) {
                 type: 'incidents',
                 element: $('.data-container'),
                 limit: 21,
-                format: data => '<div class="col-md-6"><div class="shadow card text-theme-text-1 bg-theme-color-1 animated fadeInUp mt-3 mb-3"><div class="card-body">' +
+                format: data => '<div class="col-md-6 mt-3 mb-3"><div class="shadow card text-theme-text-1 bg-theme-color-1 animated fadeInUp  h-100"><div class="card-body">' +
                     `<h5 class="card-title">${data.TYPE}</h5>` +
                     '<p class="card-text">' +
                     `<strong>User ID:</strong> ${data.TARGET_ID}<br>` +

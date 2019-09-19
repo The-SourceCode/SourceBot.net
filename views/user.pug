@@ -12,7 +12,6 @@ html
         script.
             $(document).ready(function () {
                 $('#badges-container').append(getBadge(!{JSON.stringify(user.badges)}));
-                console.log(!{JSON.stringify(user)})
             });
     body(class="bg-theme-color-main")
         block content
@@ -57,11 +56,11 @@ html
                         div=user.dailystreak.addCommas() + " daily streak"
                         hr(class="bg-theme-text-1")
                         a(href=user.github class="fab fa-github text-decoration-none text-theme-text-1" style="font-size: 30px" title="Github")
-                div(id="history" class="tab animated row" data-tab="2")
+                div(id="history" class="tab animated row eq-height" data-tab="2")
                     if incidents.length > 0
                     each incident in incidents
-                        div(class='col-md-6')
-                            div(class="shadow card text-theme-text-1 bg-theme-color-1 mb-3")
+                        div(class='col-md-6 mb-4')
+                            div(class="shadow card text-theme-text-1 bg-theme-color-1 h-100")
                                 div(class="card-body")
                                     h5(class="card-title") #{incident.TYPE}
                                     p(class="card-text")
