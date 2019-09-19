@@ -24,6 +24,16 @@ hr {
   cursor: pointer;
 }
 
+.eq-height {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.eq-height > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+
 $success: #28a745;
 $danger: #dc3545;
 $info: #007BFF;
