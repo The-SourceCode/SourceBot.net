@@ -26,7 +26,7 @@ router.post("/?", async function (req, res, next) {
                 limit: parseInt(req.body.limit) || 10,
                 skip: parseInt(req.body.skip) || 0,
                 search: {
-                    name: new RegExp(search)
+                    name: new RegExp(search, 'i')
                 }
             });
             res.status(200).send(data);
