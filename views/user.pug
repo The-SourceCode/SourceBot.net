@@ -36,7 +36,7 @@ html
                     div(class="col")
                         div(class="pb-3")
                             h4 Bio
-                            !=user.bio
+                            !=user.bio || "<i>This user doesn't have a bio...</i>"
                         hr(class="bg-theme-text-1")
                         div(class="pb-3")
                             h4 Roles
@@ -55,7 +55,8 @@ html
                         hr(class="bg-theme-text-1")
                         div=user.dailystreak.addCommas() + " daily streak"
                         hr(class="bg-theme-text-1")
-                        a(href=user.github class="fab fa-github text-decoration-none text-theme-text-1" style="font-size: 30px" title="Github")
+                        if user.github
+                            a(href=user.github class="fab fa-github text-decoration-none text-theme-text-1" style="font-size: 30px" title="Github")
                 div(id="history" class="tab animated row eq-height" data-tab="2")
                     if incidents.length > 0
                     each incident in incidents

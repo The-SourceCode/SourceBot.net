@@ -101,11 +101,29 @@ function loadData(page, onFinish) {
                         '</div></a>';
                 },
                 onFinishAdding: function () {
-                    $('[data-toggle="popover"]').popover({
-                        trigger: 'hover',
-                        delay: {show: 1000},
-                        placement: 'auto'
-                    });
+                    let timeout;
+                    $('[data-toggle="popover"]').popover({trigger: "manual", html: true, placement: 'auto'})
+                        .on("mouseenter", function () {
+                            if (timeout) {
+                                $('[data-toggle="popover"]').popover("hide");
+                                clearTimeout(timeout);
+                            }
+                            const curr = $(this);
+                            timeout = setTimeout(() => {
+                                curr.popover("show");
+                                $(".popover").on("mouseleave", function () {
+                                    curr.popover('hide');
+                                });
+                            }, 1000);
+                        })
+                        .on("mouseleave", function () {
+                            if (!$(".popover:hover").length) {
+                                setTimeout(() => {
+                                    $(this).popover("hide");
+                                }, 1000);
+                            }
+                        });
+
                     onFinish();
                 }
             });
@@ -129,7 +147,8 @@ $(document).ready(function () {
         template: '<div class="tooltip" role="tooltip"><div class="tooltip-inner"></div></div>'
     });
     $('#toggle-theme').bootstrapToggle(dark_theme ? "on" : "off");
-    dynamicColor()
+    dynamicColor();
+
 });
 
 function dynamicColor() {
@@ -188,7 +207,7 @@ function getBadge(badges) {
     let html = "";
     if (badges && badges.length > 0) {
         for (let i = 0; i < badges.length; i++) {
-            html += `<span class="badge badge-${badgeColor(badges[i])}" style="font-size: 14px;">${badges[i]}</span> `;
+            html += `<span class="badge p-1 badge-${badgeColor(badges[i])}" style="font-size: 14px;">${badges[i]}</span> `;
         }
         html += "<br>";
     }

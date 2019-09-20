@@ -1,7 +1,7 @@
 const {Users, Incidents} = require('./Schemas');
 const markdown = require("markdown-it")({
     breaks: true,
-    html: true,
+    html: false,
     linkify: true,
     typographer: true
 });
