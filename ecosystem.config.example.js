@@ -17,4 +17,14 @@ module.exports = {
       NODE_ENV: 'production'
     }
   }],
+  deploy : {
+    production : {
+      user : '', // Username to log in
+      host : '', // Host/IP of website server
+      ref  : 'origin/production', // origin/<branch>
+      repo : 'https://github.com/The-SourceCode/SourceBot.net.git',
+      path : '/home/sourcebot/production', // Path to deploy the site
+      'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production'
+    }
+  }
 };
