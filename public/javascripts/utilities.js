@@ -275,7 +275,9 @@ function enableTabs(currentTab) {
 }
 
 function animateCSS(element, animations, callback) {
-    const node = document.querySelector(element);
+    let node;
+    if (typeof element !== "string") node = element[0];
+    else node = document.querySelector(element);
     node.classList.add('animated');
     animations.forEach(animationName => node.classList.add(animationName));
 
