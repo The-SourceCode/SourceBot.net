@@ -90,7 +90,7 @@ function loadData(page, onFinish) {
                 format: data => {
                     data.script = data.bio ? data.bio.includes("<script>") : false;
 
-                    const content = getBadge(data.badges) + (data.bio || "<i>No bio...</i>");
+                    const content = getBadge(data.badges) + (data.bio || "<i>No bio...</i>").replace(/"/, "'");
                     return `<a href="/user/${data.id}" class="shadow card text-theme-text-1 bg-theme-color-1 animated fadeInUp mt-1 mb-1" ` +
                         `data-html="${!data.script}" title="${data.name}" data-content='${content}' data-toggle="popover">` +
                         `<div class="card-body row text-justify">` +
@@ -275,7 +275,9 @@ function enableTabs(currentTab) {
 }
 
 function animateCSS(element, animations, callback) {
-    const node = document.querySelector(element);
+    let node;
+    if (typeof element !== "string") node = element[0];
+    else node = document.querySelector(element);
     node.classList.add('animated');
     animations.forEach(animationName => node.classList.add(animationName));
 
