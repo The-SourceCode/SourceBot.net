@@ -1,5 +1,6 @@
-let dark_theme = getCookie('theme') === 'dark';
+// let dark_theme = getCookie('theme') === 'dark';
 let infiniteScroll;
+let dark_theme  = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
 // Credits: https://stackoverflow.com/a/2686098
 function abbrNum(number, decPlaces) {
@@ -90,7 +91,7 @@ function loadData(page, onFinish) {
                 format: data => {
                     data.script = data.bio ? data.bio.includes("<script>") : false;
 
-                    const content = getBadge(data.badges) + (data.bio || "<i>No bio...</i>");
+                    const content = getBadge(data.badges) + (data.bio || "<i>No bio...</i>").replace(/"/, "'");
                     return `<a href="/user/${data.id}" class="shadow card text-theme-text-1 bg-theme-color-1 animated fadeInUp mt-1 mb-1" ` +
                         `data-html="${!data.script}" title="${data.name}" data-content='${content}' data-toggle="popover">` +
                         `<div class="card-body row text-justify">` +
@@ -149,6 +150,7 @@ $(document).ready(function () {
     $('#toggle-theme').bootstrapToggle(dark_theme ? "on" : "off");
     dynamicColor();
 
+    setTimeout(()=>theme(dark_theme ? "dark": "light"), 1000);
 });
 
 function dynamicColor() {
