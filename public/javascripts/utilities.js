@@ -1,5 +1,6 @@
-let dark_theme = getCookie('theme') === 'dark';
+// let dark_theme = getCookie('theme') === 'dark';
 let infiniteScroll;
+let dark_theme  = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
 // Credits: https://stackoverflow.com/a/2686098
 function abbrNum(number, decPlaces) {
@@ -149,6 +150,7 @@ $(document).ready(function () {
     $('#toggle-theme').bootstrapToggle(dark_theme ? "on" : "off");
     dynamicColor();
 
+    setTimeout(()=>theme(dark_theme ? "dark": "light"), 1000);
 });
 
 function dynamicColor() {
