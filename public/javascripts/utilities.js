@@ -91,9 +91,9 @@ function loadData(page, onFinish) {
                 format: data => {
                     data.script = data.bio ? data.bio.includes("<script>") : false;
 
-                    const content = getBadge(data.badges) + (data.bio || "<i>No bio...</i>").replace(/"/, "'");
+                    const content = getBadge(data.badges) + (data.bio || "<i>No bio...</i>").replace(/"/g, "'");
                     return `<a href="/user/${data.id}" class="shadow card text-theme-text-1 bg-theme-color-1 animated fadeInUp mt-1 mb-1" ` +
-                        `data-html="${!data.script}" title="${data.name}" data-content="<span>${content}</span>" data-toggle="popover">` +
+                        `data-html="${!data.script}" title="${data.name}" data-content="${content.replace(/"/g, "'")}" data-toggle="popover">` +
                         `<div class="card-body row text-justify">` +
                         `<div class="col-2 d-inline-block text-truncate">#${data.rank}</div>` +
                         `<div class="col-5 d-inline-block text-truncate">${data.name + placement(data.rank)}</div>` +
