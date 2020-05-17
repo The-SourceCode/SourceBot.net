@@ -51,7 +51,7 @@ class InfiniteScroll {
                     this.items++;
                 } else {
                     for (let i = 0; i < response.data.length; i++) {
-                        this.items += i;
+                        this.items++;
                         this._elem.append(String(this._format(response.data[i], this.items)));
                     }
                 }
