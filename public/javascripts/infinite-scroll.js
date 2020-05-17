@@ -24,6 +24,7 @@ class InfiniteScroll {
         this._more = true;
         this._page = 0;
         this._query = 'q=more_data';
+        this.items = 0;
 
         const onScroll = () => {
             if (this._a) return;
@@ -47,9 +48,11 @@ class InfiniteScroll {
             .done(response => {
                 if (!Array.isArray(response.data)) {
                     this._elem.append(String(this._format(response.data)));
+                    this.items++;
                 } else {
                     for (let i = 0; i < response.data.length; i++) {
-                        this._elem.append(String(this._format(response.data[i])));
+                        this.items += i;
+                        this._elem.append(String(this._format(response.data[i], this.items)));
                     }
                 }
                 this._more = response.more;
